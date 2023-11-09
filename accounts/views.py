@@ -44,6 +44,6 @@ def registerForm(request):
             login(request,user)
             return HttpResponseRedirect(reverse("core:index"))
         
-def logout(request):
+def logoutView(request):
     logout(request)
     return HttpResponseRedirect(reverse("accounts:loginView"))
