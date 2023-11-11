@@ -2,8 +2,21 @@
 
 {% block body %}
 <div class = "p-10 lg:p-20 text-center">
-
     <h1 class = "text-3xl lg:text-6xl text-white">Django Chat</h1>
+    <div class="mt-4">
+        <div class="">
+            <form action="" class ="">        
+                <input type="text" class="flex-3 mr-3">
+                <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 input-field-button">Join</button>
+            </form>
+        </div>
+    </div>
+
+    <h1 class = "text-3xl lg:text-6xl text-white">Your Rooms</h1>
+        <div class="p-4 bg-gray-200 rounded-xl">
+            <p class = "font-semibold">Room #1</p>
+            <p>Last message from some user</p>
+            </div>
 
 </div>
 {% endblock body %}

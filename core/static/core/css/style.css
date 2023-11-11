@@ -239,3 +239,7 @@ body{
   -webkit-appearance: none;
   border-radius: 0;
 }
+
+#chat-window{
+width: 100%;
+}
