@@ -15,7 +15,7 @@ class Link(models.Model):
 class Room(models.Model):
     hash = models.CharField(max_length = 64, unique = True, default = None, null = True, blank = True)
     title = models.CharField(max_length = 256)
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(User, related_name = "rooms")
     link = models.ForeignKey(Link, related_name = "link", on_delete = models.PROTECT, null = True, blank = True)
 
     def __str__(self):

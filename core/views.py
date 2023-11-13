@@ -7,7 +7,9 @@ from .models import Room,Message
 
 @login_required
 def index(request):
-    context = {}
+    currentUser = request.user
+    rooms = currentUser.rooms.all()
+    context = {"rooms":rooms}
     return render(request, "core/index.html", context)
 
 @login_required
@@ -23,5 +25,5 @@ def create_room(request):
 @login_required
 def room(request, hash):
     room = Room.objects.get(hash = hash)
-    context = {}
-    return render(request, "core/room.html")
+    context = {"room":room}
+    return render(request, "core/room.html", context)

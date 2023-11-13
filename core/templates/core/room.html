@@ -3,7 +3,7 @@
 {% block body %}
 <div class = "p-10 lg:p-20 text-center">
 
-    <h1 class = "text-3xl lg:text-6xl text-white">Room name</h1>
+    <h1 class = "text-3xl lg:text-6xl text-white">{{room.title}}</h1>
     <div class="lg:w-2/4 mx-4 lg:max-auto p-4 bg-white rounded-xl content-center">
 
         <div class="chat-messages space-y-3" id = "chat messages">
@@ -28,8 +28,8 @@
     </div>
 
     <div class="lg:w-2/4 mt-6 mx-4 lg:max-auto p-4 bg-white rounded-xl">
-        <form action="" class ="flex">        
-            <input type="text" class="flex-3 mr-3">
+        <form action="" class ="flex" id = "form">        
+            <input type="text" class="flex-3 mr-3" id = "message">
             <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 input-field-button">Send</button>
         </form>
     </div>
@@ -39,3 +39,32 @@
 
 
 {% endblock body %}
+
+{% block scripts %}
+{{room.hash|json_script:"json-roomhash"}}
+<script type = "text/javascript">
+   
+    const room_hash = JSON.parse(document.getElementById("json-roomhash").textContent)
+    let url = `ws://${window.location.host}/ws/${room_hash}/`
+
+    const chatSocket = new WebSocket(url)
+
+    chatSocket.onmessage = function(e){
+        let data = JSON.parse(e.data)
+        let hash = data.hash
+        console.log(hash)
+    }
+
+    const form = document.querySelector("#form")
+    console.log(form)
+    form.addEventListener('submit', (e)=>{
+        e.preventDefault()
+        let message=  e.target.message.value
+        chatSocket.send(JSON.stringify({
+            'message':message
+        }))
+        form.reset()
+    })
+
+</script>
+{% endblock scripts %}

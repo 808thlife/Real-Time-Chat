@@ -13,10 +13,20 @@
     </div>
 
     <h1 class = "text-3xl lg:text-6xl text-white">Your Rooms</h1>
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class = "font-semibold">Room #1</p>
-            <p>Last message from some user</p>
+    {% for room in rooms %}
+    <div>
+        
+        <div>{{room.title}}</div>
+        <a href="{% url "core:room" room.hash %}">
+            <div class="p-4 bg-gray-200 rounded-xl">
+            Click here!
             </div>
+        </a>
+        
+    </div>
+    
+    {% endfor %}
+        
 
 </div>
 {% endblock body %}
