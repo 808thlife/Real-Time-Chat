@@ -6,31 +6,29 @@
     <h1 class = "text-3xl lg:text-6xl text-white">{{room.title}}</h1>
     <div class="lg:w-2/4 mx-4 lg:max-auto p-4 bg-white rounded-xl content-center">
 
-        <div class="chat-messages space-y-3" id = "chat messages">
-    
+        <div class="chat-messages space-y-3" id = "chat-messages">
+            {% for message in messages %}
             <div class="p-4 bg-gray-200 rounded-xl">
-                <p class = "font-semibold">Username</p>
-                <p>The message lorem ipsum</p>
+                <p class = "font-semibold">{{message.sender}}</p>
+                <p>{{message.text}}</p>
             </div>
-    
-            <div class="p-4 bg-gray-200 rounded-xl">
-                <p class = "font-semibold">Username</p>
-                <p>The message lorem ipsum</p>
-            </div>
-            
-            <div class="p-4 bg-gray-200 rounded-xl">
-                <p class = "font-semibold">Username</p>
-                <p>The message lorem ipsum</p>
-            </div>
+            {% endfor %}
     
         </div>
     
     </div>
 
     <div class="lg:w-2/4 mt-6 mx-4 lg:max-auto p-4 bg-white rounded-xl">
-        <form action="" class ="flex" id = "form">        
+        <form action="" class ="flex" id = "form" method = "POST">      
+            {% csrf_token %}  
             <input type="text" class="flex-3 mr-3" id = "message">
-            <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 input-field-button">Send</button>
+            <button type="submit" class="inline-flex items-center 
+            px-3 py-2 border border-transparent text-sm 
+            leading-4 font-medium rounded-md text-white 
+            bg-indigo-600 hover:bg-indigo-700 
+            focus:outline-none focus:ring-2 
+            focus:ring-offset-2 focus:ring-indigo-500 
+            input-field-button" id = "submit-button">Send</button>
         </form>
     </div>
 
@@ -42,26 +40,49 @@
 
 {% block scripts %}
 {{room.hash|json_script:"json-roomhash"}}
+{{request.user.username|json_script:"json-username"}}
 <script type = "text/javascript">
    
     const room_hash = JSON.parse(document.getElementById("json-roomhash").textContent)
+    const username = JSON.parse(document.getElementById("json-username").textContent)
+
     let url = `ws://${window.location.host}/ws/${room_hash}/`
 
     const chatSocket = new WebSocket(url)
 
     chatSocket.onmessage = function(e){
-        let data = JSON.parse(e.data)
-        let hash = data.hash
-        console.log(hash)
+
+        const data = JSON.parse(e.data)
+
+        if(data.message){
+            let html = '<div class="p-4 bg-gray-200 rounded-xl">'
+                html += `<p class = "font-semibold">${data.username}</p>`
+                html+=`<p>${data.message}</p>`
+                html += '</div>'
+
+                document.querySelector("#chat-messages").innerHTML +=html
+        }
+        else{
+            alert("not message")
+        }
+
+    }
+
+    chatSocket.onclose = function(e){
+        console.log("closed")
     }
 
     const form = document.querySelector("#form")
-    console.log(form)
+    const submit_button = document.querySelector("#submit-button")
+
     form.addEventListener('submit', (e)=>{
         e.preventDefault()
-        let message=  e.target.message.value
+        let message =  e.target.message.value
         chatSocket.send(JSON.stringify({
-            'message':message
+            'type':'message',
+            'message':message,
+            'username': username,
+            'room_hash':room_hash
         }))
         form.reset()
     })

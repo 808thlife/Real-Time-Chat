@@ -25,5 +25,9 @@ def create_room(request):
 @login_required
 def room(request, hash):
     room = Room.objects.get(hash = hash)
-    context = {"room":room}
+    if not request.user in room.users.all():
+        room.users.add(request.user)
+        room.save()
+    messages = room.room.all()
+    context = {"room":room, "messages":messages}
     return render(request, "core/room.html", context)

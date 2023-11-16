@@ -1,6 +1,6 @@
-from django.urls import path
+from django.urls import re_path
 from . import consumers
 
 ws_urlpatterns = [
-    path('ws/<str:room_hash>/', consumers.ChatConsumer.as_asgi())
+    re_path(r'ws/(?P<room_hash>\w+)/', consumers.ChatConsumer.as_asgi())
 ]
