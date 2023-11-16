@@ -45,8 +45,8 @@
 <script type = "text/javascript">
    
     const room_hash = JSON.parse(document.getElementById("json-roomhash").textContent)
-    let url = `ws://${window.location.host}/ws/${room_hash}/`
-
+    let url = `ws://${window.location.host}/ws/room/${room_hash}`
+ 
     const chatSocket = new WebSocket(url)
 
     chatSocket.onmessage = function(e){
