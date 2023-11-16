@@ -49,9 +49,20 @@
             </div>
 
             <div class="flex item-center space-x-4">
-                <a href="{% url 'accounts:logout' %}" class = "text-white hover:text-gray-200">Logout</a>
+                <a href="{% url 'core:create_room' %}" class = "text-white hover:text-gray-200">Create New Chat</a>
             </div>
 
+            <div class="flex item-center space-x-4">
+                <a href="{% url 'accounts:logout' %}" class = "text-white hover:text-gray-200">Log Out</a>
+            </div>
+
+            <div class="flex item-center space-x-4">
+                {% block leave %}
+                {% endblock leave %}
+            </div>
+           
+
+           
         
         </nav>
 

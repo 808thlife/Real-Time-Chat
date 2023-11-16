@@ -29,7 +29,7 @@ class Room(models.Model):
         super().save(*args, **kwargs)  # Call the "real" save() method.
 
 class Message(models.Model):
-    room = models.ForeignKey(Room, related_name = "room" ,on_delete = models.CASCADE)
+    room = models.ForeignKey(Room, related_name = "messages" ,on_delete = models.CASCADE)
     sender = models.ForeignKey(User, related_name= "sent", on_delete = models.CASCADE)
     text = models.CharField(max_length=  256)
     date = models.DateTimeField(auto_now_add=True)
