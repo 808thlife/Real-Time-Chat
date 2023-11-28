@@ -31,7 +31,8 @@ Usage
 
 ### Joining a Room
 
-To join a room, users must obtain the room's unique link that you can copy from the chat window in the group (your friend must be in the group in order to copy the link). This hash can be acquired directly from the room creator or by clicking on the provided room link. Once the hash is acquired, users can join the room by visiting the following URL:
+To join a room, users must obtain the room's unique link that you can copy from the chat window in the group (your friend must be in the group in order to copy the link). This hash can be acquired directly from the room creator or by clicking on the provided room link. Once the hash is acquired, users can join the room by visiting the pasting it in this field:
+`img to paste`
 
 ### Creating a Room
 
