@@ -31,18 +31,7 @@ Usage
 
 ### Joining a Room
 
-To join a room, users must obtain the room's unique hash. This hash can be acquired directly from the room creator or by clicking on the provided room link. Once the hash is acquired, users can join the room by visiting the following URL:
-
-Markdown
-
-```
-http://localhost:8000/chat/<room_hash>
-
-```
-
-Use code with caution. [Learn more](https://bard.google.com/faq#coding)
-
-Replace `<room_hash>` with the actual hash of the desired room.
+To join a room, users must obtain the room's unique link that you can copy from the chat window in the group (your friend must be in the group in order to copy the link). This hash can be acquired directly from the room creator or by clicking on the provided room link. Once the hash is acquired, users can join the room by visiting the following URL:
 
 ### Creating a Room
 
